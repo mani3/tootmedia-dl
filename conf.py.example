@@ -1,0 +1,34 @@
+#!/usr/bin/env python
+# -*- coding:utf-8 -*-
+
+import os
+from mastodon import Mastodon
+
+BASE_URL = 'https://pawoo.net'
+EMAIL = ''
+PW = ''
+
+# Register app - only once!
+CLIENT_CRED = 'clientcred.txt'
+if os.path.exists(CLIENT_CRED) is False:
+    Mastodon.create_app(
+        'mytooterapp',
+        api_base_url=BASE_URL,
+        to_file=CLIENT_CRED
+    )
+
+# Log in - either every time, or use persisted
+USER_CRED = 'usercred.txt'
+if os.path.exists(USER_CRED) is False:
+    mastodon = Mastodon(client_id=CLIENT_CRED, api_base_url=BASE_URL,)
+    mastodon.log_in(
+        EMAIL,
+        PW,
+        to_file=USER_CRED
+    )
+
+mastodon = Mastodon(
+    client_id=CLIENT_CRED,
+    access_token=USER_CRED,
+    api_base_url=BASE_URL
+)
