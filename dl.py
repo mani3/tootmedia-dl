@@ -37,7 +37,7 @@ def download(url, dir_name='tmp'):
         with open(filename, 'wb') as f:
             f.write(res.read())
     except Exception as e:
-        logging.error(str(e, 'utf-8'))
+        logging.error(str(e))
     return filename
 
 
@@ -77,6 +77,6 @@ if __name__ == '__main__':
         try:
             main()
         except Exception as e:
-            logging.error(str(e, 'utf-8'))
+            logging.error(str(e))
             sleep(600)
         sleep(5)
