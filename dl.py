@@ -2,6 +2,7 @@
 # -*- coding:utf-8 -*-
 
 import os
+import datetime
 import json
 import urllib.request
 import logging
@@ -30,7 +31,9 @@ def download(url, dir_name='tmp'):
         os.makedirs(dir_name)
     try:
         res = urllib.request.urlopen(url)
-        filename = os.path.join(dir_name, os.path.basename(url))
+        now = datetime.datetime.now().strftime('%Y%m%d%H%M%S%f')
+        name = '{0}_{1}'.format(now, os.path.basename(url))
+        filename = os.path.join(dir_name, name)
         with open(filename, 'wb') as f:
             f.write(res.read())
     except Exception as e:
@@ -71,5 +74,9 @@ def main():
 
 if __name__ == '__main__':
     while True:
-        main()
+        try:
+            main()
+        except Exception as e:
+            logging.error(str(e, 'utf-8'))
+            sleep(600)
         sleep(5)
